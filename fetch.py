@@ -1,13 +1,9 @@
-import csv
-import sys, os
+import os
+import sys
 import io
-import xarray as xr
 import errno
-
 import requests
-import numpy as np
 import pandas as pd
-from datetime import datetime
 
 APPEND = True
 
@@ -63,11 +59,11 @@ def fetch_hiscores(username):
     s = requests.get(BASE_URL + username).content
 
     # Read csv html content into a dataframe and assign headers
-    df = pd.read_csv(io.StringIO(s.decode('utf-8')), header=0, names=['Rank', 'Level', 'XP'])
+    df = pd.read_csv(io.StringIO(s.decode('utf-8')), header=None, names=['Rank', 'Level', 'XP'])
 
     # Grab arrays corresponding to Rank and XP (level is a function of XP, no need to store)
-    rank_data = df['Rank']
     xp_data = df['XP']
+    rank_data = df['Rank']
 
     # convert the two lists to a list of tuples
     # scores = list(map(list, zip(xp_data, rank_data)))
