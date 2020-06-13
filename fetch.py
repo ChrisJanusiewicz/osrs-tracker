@@ -108,7 +108,7 @@ def store_hiscores(path, user, time):
 
     if APPEND:
         with open(filename, "a") as f:
-            line = str(time) + ',' + ','.join(map(str, scores))
+            line = str(time) + ',' + ','.join(map(str, scores)) + '\n'
             f.write(line)
 
     else:
