@@ -61,14 +61,17 @@ def fetch_hiscores(username):
     # Read csv html content into a dataframe and assign headers
     df = pd.read_csv(io.StringIO(s.decode('utf-8')), header=None, names=['Rank', 'Level', 'XP'])
 
+    # Boss kill counts are stored in the level column; must copy to xp/score column.
+    df['XP'] = df['XP'].fillna(df['Level'])
+
     # Grab arrays corresponding to Rank and XP (level is a function of XP, no need to store)
-    xp_data = df['XP']
     rank_data = df['Rank']
+    xp_data = df['XP']
 
     # convert the two lists to a list of tuples
     # scores = list(map(list, zip(xp_data, rank_data)))
 
-    scores = xp_data + rank_data
+    scores = xp_data.append(rank_data)
 
     return scores
 
